@@ -8,10 +8,16 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
+	"log"
 )
 
 var ResCli *ResClient
 var Info SdkInfo
+
+func init() {
+	ResCli = new(ResClient)
+	log.Println("Initialize the ResCli")
+}
 
 // describe the essential info of initialization of fabsdk for res management
 type SdkInfo struct {
