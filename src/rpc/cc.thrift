@@ -34,5 +34,5 @@ struct CCQueryResp {
 service CCOperation {
     CCInstallResp CCInstall(1: CCInstallReq req)
     CCInvokeResp CCInvoke(1: CCInvokeReq req)
-    CCQueryResp CCQuery(1: CCQueryResp resp)
+    CCQueryResp CCQuery(1: CCQueryReq req)
 }

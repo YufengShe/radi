@@ -21,7 +21,7 @@ func (s *CCOperationImpl) CCInvoke(ctx context.Context, req *ccapi.CCInvokeReq) 
 }
 
 // CCQuery implements the CCOperationImpl interface.
-func (s *CCOperationImpl) CCQuery(ctx context.Context, resp *ccapi.CCQueryResp) (resp *ccapi.CCQueryResp, err error) {
+func (s *CCOperationImpl) CCQuery(ctx context.Context, req *ccapi.CCQueryReq) (resp *ccapi.CCQueryResp, err error) {
 	// TODO: Your code here...
 	return
 }
