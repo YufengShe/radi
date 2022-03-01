@@ -6,7 +6,7 @@ import (
 	"radi/SdkInit"
 )
 
-func QueryCC(ccId string, funId string, args []string) (channel.Response, error) {
+func CCQuery(ccId string, funId string, args []string) (channel.Response, error) {
 	//构造传入参数
 	var ccArgs [][]byte
 	for _, arg := range args {
