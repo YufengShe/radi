@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"radi/SdkInit"
-	"radi/ccmgmt"
-	"radi/envSet"
+	"radi/rpc"
+	ccapi "radi/rpc/kitex_gen/ccAPI/ccoperation"
 )
 
 const (
@@ -13,12 +14,6 @@ const (
 )
 
 func main() {
-
-	err := envSet.EnvSet()
-	/*Set system environment*/
-	if err != nil {
-		return
-	}
 
 	/* Init the SdkInfo struct */
 	SdkInit.Info = SdkInit.SdkInfo{
@@ -34,9 +29,9 @@ func main() {
 
 	/*Define the resClient struct to manage resoruces*/
 	/*initialize the sdk instance*/
-	err = SdkInit.Sdkinit(SdkInit.Info)
+	err := SdkInit.Sdkinit(SdkInit.Info)
 	if err != nil {
-		return
+		log.Fatalln("SdkInit error" + err.Error())
 	}
 
 	/*create channel by sdk instance*/
@@ -46,11 +41,17 @@ func main() {
 	/*join channel by org peers */
 	err = SdkInit.JoinChannel(SdkInit.Info)
 	if err != nil {
-		return
+		log.Fatalln("Join Channel error" + err.Error())
 	}
 
-	/*package & install & instantiate the cc*/
-	txid = ccmgmt.InstallAndInitCC(SdkInit.Info, SdkInit.ResCli)
-	fmt.Println("CC"+" radiTrace "+"INSTANTIATE's txid is : ", txid)
+	///*package & install & instantiate the cc*/
+	//txid = ccmgmt.InstallAndInitCC(SdkInit.Info, SdkInit.ResCli)
+	//log.Println("CC"+" radiTrace "+"INSTANTIATE's txid is : ", txid)
+
+	svr := ccapi.NewServer(new(rpc.CCOperationImpl))
+	err = svr.Run()
+	if err != nil {
+		log.Fatalln("rpc server setup error" + err.Error())
+	}
 
 }
