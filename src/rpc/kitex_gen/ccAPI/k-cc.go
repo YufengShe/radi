@@ -1776,8 +1776,8 @@ ReadStructEndError:
 
 func (p *CCOperationCCQueryArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	p.Resp = NewCCQueryResp()
-	if l, err := p.Resp.FastRead(buf[offset:]); err != nil {
+	p.Req = NewCCQueryReq()
+	if l, err := p.Req.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
@@ -1814,16 +1814,16 @@ func (p *CCOperationCCQueryArgs) BLength() int {
 
 func (p *CCOperationCCQueryArgs) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "resp", thrift.STRUCT, 1)
-	offset += p.Resp.FastWriteNocopy(buf[offset:], binaryWriter)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "req", thrift.STRUCT, 1)
+	offset += p.Req.FastWriteNocopy(buf[offset:], binaryWriter)
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
 }
 
 func (p *CCOperationCCQueryArgs) field1Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("resp", thrift.STRUCT, 1)
-	l += p.Resp.BLength()
+	l += bthrift.Binary.FieldBeginLength("req", thrift.STRUCT, 1)
+	l += p.Req.BLength()
 	l += bthrift.Binary.FieldEndLength()
 	return l
 }
@@ -1974,7 +1974,7 @@ func (p *CCOperationCCInvokeResult) GetResult() interface{} {
 }
 
 func (p *CCOperationCCQueryArgs) GetFirstArgument() interface{} {
-	return p.Resp
+	return p.Req
 }
 
 func (p *CCOperationCCQueryResult) GetResult() interface{} {

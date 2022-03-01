@@ -13,7 +13,7 @@ import (
 type Client interface {
 	CCInstall(ctx context.Context, req *ccapi.CCInstallReq, callOptions ...callopt.Option) (r *ccapi.CCInstallResp, err error)
 	CCInvoke(ctx context.Context, req *ccapi.CCInvokeReq, callOptions ...callopt.Option) (r *ccapi.CCInvokeResp, err error)
-	CCQuery(ctx context.Context, resp *ccapi.CCQueryResp, callOptions ...callopt.Option) (r *ccapi.CCQueryResp, err error)
+	CCQuery(ctx context.Context, req *ccapi.CCQueryReq, callOptions ...callopt.Option) (r *ccapi.CCQueryResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -55,7 +55,7 @@ func (p *kCCOperationClient) CCInvoke(ctx context.Context, req *ccapi.CCInvokeRe
 	return p.kClient.CCInvoke(ctx, req)
 }
 
-func (p *kCCOperationClient) CCQuery(ctx context.Context, resp *ccapi.CCQueryResp, callOptions ...callopt.Option) (r *ccapi.CCQueryResp, err error) {
+func (p *kCCOperationClient) CCQuery(ctx context.Context, req *ccapi.CCQueryReq, callOptions ...callopt.Option) (r *ccapi.CCQueryResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CCQuery(ctx, resp)
+	return p.kClient.CCQuery(ctx, req)
 }

@@ -1441,7 +1441,7 @@ type CCOperation interface {
 
 	CCInvoke(ctx context.Context, req *CCInvokeReq) (r *CCInvokeResp, err error)
 
-	CCQuery(ctx context.Context, resp *CCQueryResp) (r *CCQueryResp, err error)
+	CCQuery(ctx context.Context, req *CCQueryReq) (r *CCQueryResp, err error)
 }
 
 type CCOperationClient struct {
@@ -1490,9 +1490,9 @@ func (p *CCOperationClient) CCInvoke(ctx context.Context, req *CCInvokeReq) (r *
 	return _result.GetSuccess(), nil
 }
 
-func (p *CCOperationClient) CCQuery(ctx context.Context, resp *CCQueryResp) (r *CCQueryResp, err error) {
+func (p *CCOperationClient) CCQuery(ctx context.Context, req *CCQueryReq) (r *CCQueryResp, err error) {
 	var _args CCOperationCCQueryArgs
-	_args.Resp = resp
+	_args.Req = req
 	var _result CCOperationCCQueryResult
 	if err = p.Client_().Call(ctx, "CCQuery", &_args, &_result); err != nil {
 		return
@@ -1659,7 +1659,7 @@ func (p *cCOperationProcessorCCQuery) Process(ctx context.Context, seqId int32, 
 	var err2 error
 	result := CCOperationCCQueryResult{}
 	var retval *CCQueryResp
-	if retval, err2 = p.handler.CCQuery(ctx, args.Resp); err2 != nil {
+	if retval, err2 = p.handler.CCQuery(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing CCQuery: "+err2.Error())
 		oprot.WriteMessageBegin("CCQuery", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -2364,31 +2364,31 @@ func (p *CCOperationCCInvokeResult) Field0DeepEqual(src *CCInvokeResp) bool {
 }
 
 type CCOperationCCQueryArgs struct {
-	Resp *CCQueryResp `thrift:"resp,1" json:"resp"`
+	Req *CCQueryReq `thrift:"req,1" json:"req"`
 }
 
 func NewCCOperationCCQueryArgs() *CCOperationCCQueryArgs {
 	return &CCOperationCCQueryArgs{}
 }
 
-var CCOperationCCQueryArgs_Resp_DEFAULT *CCQueryResp
+var CCOperationCCQueryArgs_Req_DEFAULT *CCQueryReq
 
-func (p *CCOperationCCQueryArgs) GetResp() (v *CCQueryResp) {
-	if !p.IsSetResp() {
-		return CCOperationCCQueryArgs_Resp_DEFAULT
+func (p *CCOperationCCQueryArgs) GetReq() (v *CCQueryReq) {
+	if !p.IsSetReq() {
+		return CCOperationCCQueryArgs_Req_DEFAULT
 	}
-	return p.Resp
+	return p.Req
 }
-func (p *CCOperationCCQueryArgs) SetResp(val *CCQueryResp) {
-	p.Resp = val
+func (p *CCOperationCCQueryArgs) SetReq(val *CCQueryReq) {
+	p.Req = val
 }
 
 var fieldIDToName_CCOperationCCQueryArgs = map[int16]string{
-	1: "resp",
+	1: "req",
 }
 
-func (p *CCOperationCCQueryArgs) IsSetResp() bool {
-	return p.Resp != nil
+func (p *CCOperationCCQueryArgs) IsSetReq() bool {
+	return p.Req != nil
 }
 
 func (p *CCOperationCCQueryArgs) Read(iprot thrift.TProtocol) (err error) {
@@ -2451,8 +2451,8 @@ ReadStructEndError:
 }
 
 func (p *CCOperationCCQueryArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Resp = NewCCQueryResp()
-	if err := p.Resp.Read(iprot); err != nil {
+	p.Req = NewCCQueryReq()
+	if err := p.Req.Read(iprot); err != nil {
 		return err
 	}
 	return nil
@@ -2488,10 +2488,10 @@ WriteStructEndError:
 }
 
 func (p *CCOperationCCQueryArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("resp", thrift.STRUCT, 1); err != nil {
+	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := p.Resp.Write(oprot); err != nil {
+	if err := p.Req.Write(oprot); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -2517,15 +2517,15 @@ func (p *CCOperationCCQueryArgs) DeepEqual(ano *CCOperationCCQueryArgs) bool {
 	} else if p == nil || ano == nil {
 		return false
 	}
-	if !p.Field1DeepEqual(ano.Resp) {
+	if !p.Field1DeepEqual(ano.Req) {
 		return false
 	}
 	return true
 }
 
-func (p *CCOperationCCQueryArgs) Field1DeepEqual(src *CCQueryResp) bool {
+func (p *CCOperationCCQueryArgs) Field1DeepEqual(src *CCQueryReq) bool {
 
-	if !p.Resp.DeepEqual(src) {
+	if !p.Req.DeepEqual(src) {
 		return false
 	}
 	return true

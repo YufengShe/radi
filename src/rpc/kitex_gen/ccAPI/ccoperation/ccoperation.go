@@ -76,7 +76,7 @@ func newCCOperationCCInvokeResult() interface{} {
 func cCQueryHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*ccapi.CCOperationCCQueryArgs)
 	realResult := result.(*ccapi.CCOperationCCQueryResult)
-	success, err := handler.(ccapi.CCOperation).CCQuery(ctx, realArg.Resp)
+	success, err := handler.(ccapi.CCOperation).CCQuery(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
@@ -121,9 +121,9 @@ func (p *kClient) CCInvoke(ctx context.Context, req *ccapi.CCInvokeReq) (r *ccap
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CCQuery(ctx context.Context, resp *ccapi.CCQueryResp) (r *ccapi.CCQueryResp, err error) {
+func (p *kClient) CCQuery(ctx context.Context, req *ccapi.CCQueryReq) (r *ccapi.CCQueryResp, err error) {
 	var _args ccapi.CCOperationCCQueryArgs
-	_args.Resp = resp
+	_args.Req = req
 	var _result ccapi.CCOperationCCQueryResult
 	if err = p.c.Call(ctx, "CCQuery", &_args, &_result); err != nil {
 		return
