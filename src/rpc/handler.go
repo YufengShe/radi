@@ -15,6 +15,7 @@ func (s *CCOperationImpl) CCInstall(ctx context.Context, req *ccapi.CCInstallReq
 	var (
 		txid string
 	)
+	resp = new(ccapi.CCInstallResp)
 	txid, err = ccmgmt.InstallCC(req.GetName(), req.GetPath())
 	resp.Txid = txid
 	resp.Err = err.Error()
