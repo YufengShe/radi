@@ -20,6 +20,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	handlerType := (*ccapi.CCOperation)(nil)
 	methods := map[string]kitex.MethodInfo{
 		"CCInstall": kitex.NewMethodInfo(cCInstallHandler, newCCOperationCCInstallArgs, newCCOperationCCInstallResult, false),
+		"CCInvoke":  kitex.NewMethodInfo(cCInvokeHandler, newCCOperationCCInvokeArgs, newCCOperationCCInvokeResult, false),
+		"CCQuery":   kitex.NewMethodInfo(cCQueryHandler, newCCOperationCCQueryArgs, newCCOperationCCQueryResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName": "ccapi",
@@ -53,6 +55,42 @@ func newCCOperationCCInstallResult() interface{} {
 	return ccapi.NewCCOperationCCInstallResult()
 }
 
+func cCInvokeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*ccapi.CCOperationCCInvokeArgs)
+	realResult := result.(*ccapi.CCOperationCCInvokeResult)
+	success, err := handler.(ccapi.CCOperation).CCInvoke(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newCCOperationCCInvokeArgs() interface{} {
+	return ccapi.NewCCOperationCCInvokeArgs()
+}
+
+func newCCOperationCCInvokeResult() interface{} {
+	return ccapi.NewCCOperationCCInvokeResult()
+}
+
+func cCQueryHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*ccapi.CCOperationCCQueryArgs)
+	realResult := result.(*ccapi.CCOperationCCQueryResult)
+	success, err := handler.(ccapi.CCOperation).CCQuery(ctx, realArg.Resp)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newCCOperationCCQueryArgs() interface{} {
+	return ccapi.NewCCOperationCCQueryArgs()
+}
+
+func newCCOperationCCQueryResult() interface{} {
+	return ccapi.NewCCOperationCCQueryResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -68,6 +106,26 @@ func (p *kClient) CCInstall(ctx context.Context, req *ccapi.CCInstallReq) (r *cc
 	_args.Req = req
 	var _result ccapi.CCOperationCCInstallResult
 	if err = p.c.Call(ctx, "CCInstall", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CCInvoke(ctx context.Context, req *ccapi.CCInvokeReq) (r *ccapi.CCInvokeResp, err error) {
+	var _args ccapi.CCOperationCCInvokeArgs
+	_args.Req = req
+	var _result ccapi.CCOperationCCInvokeResult
+	if err = p.c.Call(ctx, "CCInvoke", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CCQuery(ctx context.Context, resp *ccapi.CCQueryResp) (r *ccapi.CCQueryResp, err error) {
+	var _args ccapi.CCOperationCCQueryArgs
+	_args.Resp = resp
+	var _result ccapi.CCOperationCCQueryResult
+	if err = p.c.Call(ctx, "CCQuery", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

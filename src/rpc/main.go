@@ -1,12 +1,12 @@
-package rpc
+package main
 
 import (
 	"log"
-	ccoperate "radi/rpc/kitex_gen/ccAPI/ccoperation"
+	ccapi "radi/rpc/kitex_gen/ccAPI/ccoperation"
 )
 
 func main() {
-	svr := ccoperate.NewServer(new(CCOperationImpl))
+	svr := ccapi.NewServer(new(CCOperationImpl))
 
 	err := svr.Run()
 
