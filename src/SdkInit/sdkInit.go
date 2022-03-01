@@ -2,6 +2,7 @@ package SdkInit
 
 import (
 	"fmt"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
@@ -44,6 +45,8 @@ type ResClient struct {
 	ResMgmtClient *resmgmt.Client
 	//mspClient is used for user identity management such as register/enrollment/provide sigining identity/ext..
 	MspClient *mspclient.Client
+	//ClientChannel is used for cc execute / query / eventhub register and receive.. ext within one channel
+	ClientChannel *channel.Client
 }
 
 func Sdkinit(sdkinfo SdkInfo) error {
@@ -147,4 +150,22 @@ func JoinChannel(info SdkInfo) error {
 		fmt.Println("successfully make peers of Org " + info.OrgName + " to join CHANNEL : " + info.ChannelId)
 		return nil
 	}
+}
+
+//ChannelClientCreate() func is used to execute cc of the channel such as invoke/query/eventhub..ext
+func ChannelClientCreate(sdkInfo SdkInfo) error {
+
+	//get the channel client creation context from sdk configuration instance
+	clientChannelContext := ResCli.Fbsdk.ChannelContext(sdkInfo.ChannelId, fabsdk.WithOrg(sdkInfo.OrgName), fabsdk.WithUser(sdkInfo.OrgAdmin))
+
+	//New a channel client for cc execute/query and eventhub manage
+	client, err := channel.New(clientChannelContext)
+	if err != nil {
+		return err
+	} else {
+		log.Println("Successfully Create the ChannelClient Instance!")
+	}
+
+	ResCli.ClientChannel = client
+	return nil
 }

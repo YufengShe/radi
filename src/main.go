@@ -44,6 +44,11 @@ func main() {
 		log.Fatalln("Join Channel error" + err.Error())
 	}
 
+	/*create channel client*/
+	err = SdkInit.ChannelClientCreate(SdkInit.Info)
+	if err != nil {
+		log.Fatalln("ChannelClient create error: " + err.Error())
+	}
 	///*package & install & instantiate the cc*/
 	//txid = ccmgmt.InstallAndInitCC(SdkInit.Info, SdkInit.ResCli)
 	//log.Println("CC"+" radiTrace "+"INSTANTIATE's txid is : ", txid)
