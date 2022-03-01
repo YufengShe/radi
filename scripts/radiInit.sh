@@ -1,5 +1,5 @@
 #!/bin/bash
-export ProjectDir=/home/ubuntu/project/fabric-conn/radi
+export ProjectDir=/home/ubuntu/project//radi
 
 cd $ProjectDir
 cd ./src
