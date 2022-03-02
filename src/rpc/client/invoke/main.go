@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	client, err := ccoperate.NewClient("ccOperate", client2.WithHostPorts("0.0.0.0:8888"))
+	client, err := ccoperate.NewClient("ccOperate", client2.WithHostPorts("82.156.74.62:8888"))
 	if err != nil {
 		log.Fatalln("rpc client setup error" + err.Error())
 	}
