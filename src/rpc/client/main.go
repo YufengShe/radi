@@ -16,7 +16,7 @@ func main() {
 
 	req := &ccapi.CCInstallReq{
 		Name: "testCC",
-		Path: "chaincode/raditrace",
+		Path: "chaincode/testcc",
 	}
 	resp, err := client.CCInstall(context.Background(), req)
 	if err != nil {

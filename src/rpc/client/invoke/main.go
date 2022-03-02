@@ -23,7 +23,7 @@ func main() {
 		"data-addr",
 	}
 	req := &ccapi.CCInvokeReq{
-		ChaincodeId: "testcc",
+		ChaincodeId: "testCC",
 		FuncId:      "MetaRegister",
 		Args_:       args,
 	}

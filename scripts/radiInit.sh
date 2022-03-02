@@ -4,4 +4,4 @@ export ProjectDir=/home/ubuntu/project//radi
 cd $ProjectDir
 cd ./src
 
-go run main.go
+nohup go run main.go >radi.log 2>radi.error &
