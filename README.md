@@ -1,12 +1,12 @@
-##Note: Kitex rpc框架不兼容Win环境，在Win下无法正常使用
+## Note: Kitex rpc框架不兼容Win环境，在Win下无法正常使用
 
-##Intro
+## Intro
 radi将一个一组织两节点的Hyperledger Fabric网络部署在服务器82.156.74.62上
 同时在该服务器上启动了一个rpc server，可以接收并处理rpc client发送的请求，包括
 链码安装、链码函数调用（invoke）和链码函数查询（query）。
 
-##API
-###链码安装
+## API
+### 链码安装
 ```
 func CCInstall(req CCInstallReq) (CCInstallResp, error)
 
